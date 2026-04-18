@@ -1,93 +1,266 @@
-# att
+# Student Management System - Developer Skill Test
 
+A comprehensive full-stack web application for managing school operations including students, staff, classes, notices, and leave management. This project serves as a skill assessment platform for **Frontend**, **Backend**, and **Blockchain** developers.
 
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## 🏗️ Project Architecture
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/bcs1182916/att.git
-git branch -M main
-git push -uf origin main
+skill-test/
+├── frontend/           # React + TypeScript + Material-UI
+├── backend/            # Node.js + Express + PostgreSQL
+├── go-service/         # Golang microservice for PDF reports
+├── seed_db/           # Database schema and seed data
+└── README.md          # This file
 ```
 
-## Integrate with your tools
+## 🚀 Quick Start
 
-* [Set up project integrations](https://gitlab.com/bcs1182916/att/-/settings/integrations)
+### Prerequisites
+- Node.js (v16 or higher)
+- PostgreSQL (v12 or higher)
+- npm or yarn
 
-## Collaborate with your team
+### 1. Backend Setup
+```bash
+cd backend
+npm install
+cp .env.example .env  # Configure your environment variables
+npm start
+```
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+### 2. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## Test and Deploy
+### 3. Access the Application
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:5007
+- **Demo Credentials**: 
+  - Email: `admin@school-admin.com`
+  - Password: `3OU4zn3q6Zh9`
 
-Use the built-in continuous integration in GitLab.
+### ** Database Setup **
+```bash
+# Create PostgreSQL database
+createdb school_mgmt
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+# Run database migrations
+psql -d school_mgmt -f seed_db/tables.sql
+psql -d school_mgmt -f seed_db/seed-db.sql
+```
 
-***
+## 🎯 Skill Test Problems
 
-# Editing this README
+### **Problem 1: Frontend Developer Challenge**
+**Fix "Add New Notice" Page**
+- **Location**: `/app/notices/add`
+- **Issue**: When clicking the 'Save' button, the 'description' field doesn't get saved
+- **Skills Tested**: React, Form handling, State management, API integration
+- **Expected Fix**: Ensure description field is properly bound and submitted
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### **Problem 2: Backend Developer Challenge**
+**Complete CRUD Operations in Student Management**
+- **Location**: `/src/modules/students/students-controller.js`
+- **Issue**: Implement missing CRUD operations for student management
+- **Skills Tested**: Node.js, Express, PostgreSQL, API design, Error handling
+- **Expected Implementation**: Full Create, Read, Update, Delete operations
 
-## Suggestions for a good README
+### **Problem 3: Blockchain Developer Challenge**
+**Implement Certificate Verification System**
+- **Objective**: Add blockchain-based certificate verification for student achievements
+- **Skills Tested**: Smart contracts, Web3 integration, Ethereum/Polygon
+- **Requirements**:
+  - Create smart contract for certificate issuance and verification
+  - Integrate Web3 wallet connection in frontend
+  - Add certificate management in admin panel
+  - Implement IPFS for certificate metadata storage
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### **Problem 4: Golang Developer Challenge**
+**Build PDF Report Generation Microservice via API Integration**
+- **Objective**: Create a standalone microservice in Go to generate PDF reports for students by consuming the existing Node.js backend API.
+- **Location**: A new `go-service/` directory at the root of the project.
+- **Description**: This service will connect to the existing Node.js backend's `/api/v1/students/:id` endpoint to fetch student data, and then use the returned JSON to generate a downloadable PDF report.
+- **Skills Tested**: Golang, REST API consumption, JSON parsing, file generation, microservice integration.
+- **Requirements**:
+  - Create a new endpoint `GET /api/v1/students/:id/report` in the Go service.
+  - The Go service must not connect directly to the database; it must fetch data from the Node.js API.
+  - The developer **must** have the PostgreSQL database and the Node.js backend running to complete this task.
 
-## Name
-Choose a self-explaining name for your project.
+### **Problem 5: DevOps Engineer Challenge**
+**Containerize the Full Application Stack**
+- **Objective**: Create a multi-container setup to run the entire application stack (Frontend, Backend, Database) using Docker and Docker Compose.
+- **Location**: `Dockerfile` in the `frontend` and `backend` directories, and a `docker-compose.yml` file at the project root.
+- **Description**: The goal is to make the entire development environment reproducible and easy to launch with a single command. The candidate must ensure all services can communicate with each other inside the Docker network.
+- **Skills Tested**: Docker, Docker Compose, container networking, database seeding in a container, environment variable management.
+- **Requirements**:
+  - Write a `Dockerfile` for the `frontend` service.
+  - Write a `Dockerfile` for the `backend` service.
+  - Create a `docker-compose.yml` at the root to define and link the `frontend`, `backend`, and `postgres` services.
+  - The `postgres` service must be automatically seeded with the data from the `seed_db/` directory on its first run.
+  - The entire application should be launchable with `docker-compose up`.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## 🛠️ Technology Stack
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Frontend
+- **Framework**: React 18 + TypeScript
+- **UI Library**: Material-UI (MUI) v6
+- **State Management**: Redux Toolkit + RTK Query
+- **Form Handling**: React Hook Form + Zod validation
+- **Build Tool**: Vite
+- **Code Quality**: ESLint, Prettier, Husky
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Backend
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: PostgreSQL
+- **Authentication**: JWT + CSRF protection
+- **Password Hashing**: Argon2
+- **Email Service**: Resend API
+- **Validation**: Zod
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### Database
+- **Primary DB**: PostgreSQL
+- **Schema**: Comprehensive school management schema
+- **Features**: Role-based access control, Leave management, Notice system
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## 📋 Features
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Core Functionality
+- **Dashboard**: User statistics, notices, birthday celebrations, leave requests
+- **User Management**: Multi-role system (Admin, Student, Teacher, Custom roles)
+- **Academic Management**: Classes, sections, students, class teachers
+- **Leave Management**: Policy definition, request submission, approval workflow
+- **Notice System**: Create, approve, and distribute notices
+- **Staff Management**: Employee profiles, departments, role assignments
+- **Access Control**: Granular permissions system
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### Security Features
+- JWT-based authentication with refresh tokens
+- CSRF protection
+- Role-based access control (RBAC)
+- Password reset and email verification
+- Secure cookie handling
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## 🔧 Development Guidelines
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+### Code Standards
+- **File Naming**: kebab-case for consistency across OS
+- **Import Style**: Absolute imports for cleaner code
+- **Code Formatting**: Prettier with consistent configuration
+- **Git Hooks**: Husky for pre-commit quality checks
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### Project Structure
+```
+frontend/src/
+├── api/           # API configuration and base setup
+├── assets/        # Static assets (images, styles)
+├── components/    # Shared/reusable components
+├── domains/       # Feature-based modules
+│   ├── auth/      # Authentication module
+│   ├── students/  # Student management
+│   ├── notices/   # Notice system
+│   └── ...
+├── hooks/         # Custom React hooks
+├── routes/        # Application routing
+├── store/         # Redux store configuration
+├── theme/         # MUI theme customization
+└── utils/         # Utility functions
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```
+backend/src/
+├── config/        # Database and app configuration
+├── middlewares/   # Express middlewares
+├── modules/       # Feature-based API modules
+│   ├── auth/      # Authentication endpoints
+│   ├── students/  # Student CRUD operations
+│   ├── notices/   # Notice management
+│   └── ...
+├── routes/        # API route definitions
+├── shared/        # Shared utilities and repositories
+├── templates/     # Email templates
+└── utils/         # Helper functions
+```
 
-## License
-For open source projects, say how it is licensed.
+## 🧪 Testing Instructions
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### For Frontend Developers
+1. Navigate to the notices section
+2. Try to create a new notice with description
+3. Verify the description is saved correctly
+4. Test form validation and error handling
+
+### For Backend Developers
+1. Test all student CRUD endpoints using Postman/curl
+2. Verify proper error handling and validation
+3. Check database constraints and relationships
+4. Test authentication and authorization
+
+### For Blockchain Developers
+1. Set up local blockchain environment (Hardhat/Ganache)
+2. Deploy certificate smart contract
+3. Integrate Web3 wallet connection
+4. Test certificate issuance and verification flow
+
+### For Golang Developers
+1. Set up the PostgreSQL database using `seed_db/` files.
+2. Set up and run the Node.js backend by following its setup instructions.
+3. Run the Go service.
+4. Use a tool like `curl` or Postman to make a GET request to the Go service's `/api/v1/students/:id/report` endpoint.
+5. Verify that the Go service correctly calls the Node.js backend and that a PDF file is successfully generated.
+6. Check the contents of the PDF for correctness.
+
+### For DevOps Engineers
+1. Ensure Docker and Docker Compose are installed on your machine.
+2. From the project root, run the command `docker-compose up --build`.
+3. Wait for all services to build and start.
+4. Access the frontend at `http://localhost:5173` and verify the application is running.
+5. Log in with the demo credentials to confirm that the frontend, backend, and database are all communicating correctly.
+
+## 📚 API Documentation
+
+### Authentication Endpoints
+- `POST /api/v1/auth/login` - User login
+- `POST /api/v1/auth/logout` - User logout
+- `GET /api/v1/auth/refresh` - Refresh access token
+
+### Student Management
+- `GET /api/v1/students` - List all students
+- `POST /api/v1/students` - Create new student
+- `PUT /api/v1/students/:id` - Update student
+- `DELETE /api/v1/students/:id` - Delete student
+
+### Notice Management
+- `GET /api/v1/notices` - List notices
+- `POST /api/v1/notices` - Create notice
+- `PUT /api/v1/notices/:id` - Update notice
+- `DELETE /api/v1/notices/:id` - Delete notice
+
+### PDF Generation Service (Go)
+- `GET /api/v1/students/:id/report` - Generate and download a PDF report for a specific student.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+For questions and support:
+- Create an issue in the repository
+- Check existing documentation in `/frontend/README.md` and `/backend/README.md`
+- Review the database schema in `/seed_db/tables.sql`
+
+---
+
+**Happy Coding! 🚀**
